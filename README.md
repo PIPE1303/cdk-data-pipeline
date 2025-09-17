@@ -1,6 +1,20 @@
 # CDK Data Pipeline
 
+[![AWS CDK](https://img.shields.io/badge/AWS-CDK-orange?style=for-the-badge&logo=amazon-aws)](https://aws.amazon.com/cdk/)
+[![Python](https://img.shields.io/badge/Python-3.11+-blue?style=for-the-badge&logo=python)](https://python.org)
+[![License](https://img.shields.io/badge/License-MIT-green?style=for-the-badge)](LICENSE)
+
 A complete AWS data pipeline built with AWS CDK (Cloud Development Kit) that demonstrates modern data engineering practices including ETL processes, data cataloging, and analytics.
+
+## ✨ Features
+
+- 🚀 **Serverless Architecture**: Fully managed AWS services with no infrastructure management
+- 📊 **Real-time Data Processing**: Lambda-based ETL with automatic data extraction
+- 🗄️ **Data Cataloging**: Automated schema discovery with AWS Glue Crawler
+- 🔍 **SQL Analytics**: Query data directly with Amazon Athena
+- 🔒 **Data Governance**: Fine-grained access control with AWS Lake Formation
+- 🏗️ **Infrastructure as Code**: Complete CDK implementation for reproducible deployments
+- 📈 **Cost Optimized**: Pay-per-use model with minimal operational overhead
 
 ## 🏗️ Architecture
 
@@ -20,6 +34,18 @@ API Data Source → Lambda (ETL) → S3 Data Lake → Glue Crawler → Glue Cata
 - **Lake Formation**: Data governance and access control
 - **IAM Roles**: Secure access management
 
+## 🛠️ Technologies Used
+
+- **AWS CDK**: Infrastructure as Code framework
+- **AWS Lambda**: Serverless compute for ETL processes
+- **Amazon S3**: Data lake storage with lifecycle policies
+- **AWS Glue**: Data cataloging and schema discovery
+- **Amazon Athena**: Serverless SQL analytics
+- **AWS Lake Formation**: Data governance and access control
+- **AWS IAM**: Identity and access management
+- **Python 3.11+**: Programming language for CDK and Lambda
+- **Node.js**: CDK CLI runtime
+
 ## 🚀 Quick Start
 
 ### Prerequisites
@@ -33,7 +59,7 @@ API Data Source → Lambda (ETL) → S3 Data Lake → Glue Crawler → Glue Cata
 
 1. **Clone the repository**:
    ```bash
-   git clone https://github.com/yourusername/cdk-data-pipeline.git
+   git clone https://github.com/PIPE1303/cdk-data-pipeline.git
    cd cdk-data-pipeline
    ```
 
@@ -227,6 +253,36 @@ pytest
 ## 🤝 Contributing
 
 Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct and the process for submitting pull requests.
+
+## 💰 Cost Estimation
+
+This pipeline is designed to be cost-effective for development and testing:
+
+- **AWS Lambda**: ~$0.0001 per 100 invocations
+- **Amazon S3**: ~$0.01 per GB stored (minimal data)
+- **AWS Glue Crawler**: ~$0.05 per execution
+- **Amazon Athena**: ~$0.02 per 10 queries (based on data scanned)
+- **Total Estimated Daily Cost**: ~$0.08
+
+*Costs may vary based on actual usage and data volume.*
+
+## 🗺️ Roadmap
+
+Future enhancements planned:
+
+- [ ] **Data Transformation**: Add Glue ETL jobs for data processing
+- [ ] **Monitoring**: CloudWatch dashboards and alerts
+- [ ] **CI/CD**: GitHub Actions for automated deployments
+- [ ] **Data Quality**: Implement data validation and quality checks
+- [ ] **Visualization**: Integration with Amazon QuickSight
+- [ ] **Multi-Environment**: Support for dev/staging/prod environments
+- [ ] **Security**: Enhanced IAM policies with least privilege
+
+## 🙏 Acknowledgments
+
+- [AWS Cloud Development Kit (CDK)](https://aws.amazon.com/cdk/) for Infrastructure as Code
+- [RandomUser API](https://randomuser.me/) for providing test data
+- AWS Community for best practices and documentation
 
 ## 📄 License
 
