@@ -1,28 +1,52 @@
 #!/usr/bin/env python3
 import os
-
 import aws_cdk as cdk
 
-from cdk_data_pipeline.cdk_data_pipeline_stack import CdkDataPipelineStack
-
+from data_pipeline.iam_stack import IamStack
+from data_pipeline.storage_stack import StorageStack
+from data_pipeline.etl_stack import EtlStack
+from data_pipeline.glue_stack import GlueStack
+from data_pipeline.athena_stack import AthenaStack
+from data_pipeline.lakeformation_stack import LakeFormationStack
 
 app = cdk.App()
-CdkDataPipelineStack(app, "CdkDataPipelineStack",
-    # If you don't specify 'env', this stack will be environment-agnostic.
-    # Account/Region-dependent features and context lookups will not work,
-    # but a single synthesized template can be deployed anywhere.
 
-    # Uncomment the next line to specialize this stack for the AWS Account
-    # and Region that are implied by the current CLI configuration.
+env = cdk.Environment(
+    account=os.getenv("CDK_DEFAULT_ACCOUNT"),
+    region=os.getenv("CDK_DEFAULT_REGION", "us-east-1"),
+)
 
-    #env=cdk.Environment(account=os.getenv('CDK_DEFAULT_ACCOUNT'), region=os.getenv('CDK_DEFAULT_REGION')),
+iam = IamStack(app, "IamStack", env=env)
+storage = StorageStack(app, "StorageStack", env=env)
 
-    # Uncomment the next line if you know exactly what Account and Region you
-    # want to deploy the stack to. */
+etl = EtlStack(
+    app, "EtlStack",
+    data_bucket=storage.data_bucket,
+    lambda_role=iam.lambda_role,
+    env=env
+)
 
-    #env=cdk.Environment(account='123456789012', region='us-east-1'),
+glue = GlueStack(
+    app, "GlueStack",
+    data_bucket=storage.data_bucket,
+    glue_crawler_role=iam.glue_crawler_role,
+    env=env
+)
 
-    # For more information, see https://docs.aws.amazon.com/cdk/latest/guide/environments.html
-    )
+athena = AthenaStack(
+    app, "AthenaStack",
+    results_bucket=storage.results_bucket,
+    env=env
+)
+
+lf = LakeFormationStack(
+    app, "LakeFormationStack",
+    glue_db_name=glue.db_name,
+    data_bucket=storage.data_bucket,
+    athena_results_bucket=storage.results_bucket,
+    analyst_principal_arn=iam.analyst_role.role_arn,
+    glue_crawler_role_arn=iam.glue_crawler_role.role_arn,
+    env=env
+)
 
 app.synth()
